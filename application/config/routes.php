@@ -54,7 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
 
-//rutas para Fiestas 
+//rutas para Fiestas
 $route['fiestas']['get'] = 'fiestas/index';
 $route['fiestas/(:num)']['get'] = 'fiestas/find/$1';
 $route['fiestas']['post'] = 'fiestas/index';
@@ -69,6 +69,14 @@ $route['fotografia']['post'] = 'fotografia/index';
 $route['fotografia/(:num)']['put'] = 'fotografia/index/$1';
 $route['fotografia/(:num)']['delete'] = 'fotografia/index/$1';
 
+//rutas para Comunidad
+$route['comunidades']['get'] = 'comunidades/index';
+$route['comunidades/(:num)']['get'] = 'comunidades/find/$1';
+$route['comunidades']['post'] = 'comunidades/index';
+$route['comunidades/(:num)']['put'] = 'comunidades/index/$1';
+$route['comunidades/(:num)']['delete'] = 'comunidades/index/$1';
+
+$route['fiestas-comunidades']['get'] = 'comunidades/getComunFiesta';
 
 /*
 | -------------------------------------------------------------------------

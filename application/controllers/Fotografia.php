@@ -5,14 +5,38 @@ require_once APPPATH . '/libraries/REST_Controller.php';
 
 class Fotografia extends REST_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Fotografia_Model');
+    }
+
     public function index_get()
     {
-        echo 'Fotografias';
+      //se llama al modelo fotografias
+      $fotografia = $this->Fotografia_Model->get();
+
+      // se valida si el resultado no es null de la respuesta
+      if (!is_null($fotografia)){
+          $this->response(array('response' => $fotografia),200);
+      }else{
+          $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
+      }
     }
 
     public function find_get($id)
     {
-        echo 'Fotografia numero '. $id;
+      if (!$id){
+          $this->response(null,400);
+      }
+      $fotografia = $this->Fotografia_Model->get($id);
+
+      if (!is_null($fotografia)){
+          $this->response(array('response' =>$fotografia),200);
+
+      }else{
+          $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
+      }
     }
 
     public function index_post(){}
