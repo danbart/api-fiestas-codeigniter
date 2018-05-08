@@ -3,18 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . '/libraries/REST_Controller.php';
 
 
-class Comunidades extends REST_Controller {
+class ComunidadFiesta extends REST_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Comunidades_Model');
+        $comunidad=$this->load->model('Comunidades_Model');
+        $fiesta=$this->load->model('fiestas_model');
     }
 
     public function index_get()
     {
       //se llama al modelo Comunidades
-      $comunidad = $this->Comunidades_Model->get();
+      $$comunidad = $this->Comunidades_Model->comunFiestas();
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($comunidad)){
@@ -36,19 +37,6 @@ class Comunidades extends REST_Controller {
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
-      }
-    }
-
-    public function index_comunFiesta()
-    {
-      //se llama al modelo Comunidades
-      $comunidad = $this->Comunidades_Model->comunFiestas();
-
-      // se valida si el resultado no es null de la respuesta
-      if (!is_null($comunidad)){
-          $this->response(array('response' => $comunidad),200);
-      }else{
-          $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
       }
     }
 

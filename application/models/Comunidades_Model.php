@@ -31,7 +31,7 @@ class Comunidades_Model extends CI_model
         return false;
     }
 
-    public function getComunFiestas($id = null){
+    public function comunFiestas($id = null){
         if (!is_null($id)){
             $query = $this->db->query('*')->from('Comunidades')->where('idComunidades',$id)->get();
 
