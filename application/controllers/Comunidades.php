@@ -39,7 +39,7 @@ class Comunidades extends REST_Controller {
       }
     }
 
-    public function getComunFiesta()
+    public function index_getComunFiesta()
     {
       //se llama al modelo Comunidades
       $comunidad = $this->Comunidades_Model->getComunFiestas();

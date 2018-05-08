@@ -76,7 +76,7 @@ $route['comunidades']['post'] = 'comunidades/index';
 $route['comunidades/(:num)']['put'] = 'comunidades/index/$1';
 $route['comunidades/(:num)']['delete'] = 'comunidades/index/$1';
 
-$route['fiestas-comunidades']['get'] = 'comunidades/getComunFiesta';
+$route['comunidades/fiestas']['get'] = 'comunidades/getComunFiesta';
 
 /*
 | -------------------------------------------------------------------------

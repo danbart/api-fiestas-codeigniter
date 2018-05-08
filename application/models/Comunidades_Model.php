@@ -24,7 +24,6 @@ class Comunidades_Model extends CI_model
         }
 
         $query = $this->db->select('*')->from('Comunidades')->get();
-
         if($query->num_rows()>0){
           return $query->result_array();
 
@@ -42,7 +41,7 @@ class Comunidades_Model extends CI_model
             return false;
         }
 
-        $query = $this->db->query('select * from Comunidades cm inner join Fiestas ft on cm.idComunidades=ft.Comunidades_idComunidades')->get();
+        $query = $this->db->query('select * from Comunidades cm inner join Fiestas ft on cm.idComunidades=ft.Comunidades_idComunidades');
 
         if($query->num_rows()>0){
           return $query->result_array();
