@@ -76,8 +76,13 @@ $route['comunidades']['post'] = 'comunidades/index';
 $route['comunidades/(:num)']['put'] = 'comunidades/index/$1';
 $route['comunidades/(:num)']['delete'] = 'comunidades/index/$1';
 
+//fiestas del municipio
 $route['comunidadfiesta']['get'] = 'comunidadfiesta/index';
+$route['comunidadfiesta/(:num)']['get'] = 'comunidadfiesta/find/$1';
 
+//Fiestas del departamento
+$route['departamentofiestas']['get'] = 'departamentofiestas/index';
+$route['departamentofiestas/(:num)']['get'] = 'departamentofiestas/find/$1';
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes
