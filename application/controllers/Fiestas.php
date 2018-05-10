@@ -19,7 +19,7 @@ class Fiestas extends REST_Controller {
 
         // se valida si el resultado no es null de la respuesta
         if (!is_null($fiestas)){
-            $this->response(array('response' => $fiestas),200);
+            $this->response($fiestas,200);
         }else{
             $this->response(array('error'=> 'No hay fiestas en la base de datos...'), 400);
         }
@@ -27,7 +27,7 @@ class Fiestas extends REST_Controller {
 
 
     }
-    
+
     public function find_get($id)
     {
         if (!$id){
@@ -36,13 +36,13 @@ class Fiestas extends REST_Controller {
         $fiestas = $this->fiestas_model->get($id);
 
         if (!is_null($fiestas)){
-            $this->response(array('response' =>$fiestas),200);
+            $this->response($fiestas,200);
 
         }else{
             $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
         }
     }
-    
+
     public function index_post(){
         if (!$this->post('fiesta')){
             $this
@@ -56,7 +56,7 @@ class Fiestas extends REST_Controller {
             $this->response(array('error', 'Algo ha fallao con el servidor'),400);
         }
     }
-    
+
     public function index_put($id){
         if (!$this->post('fiesta' || !$id)){
             $this->response(null,400);
@@ -70,7 +70,7 @@ class Fiestas extends REST_Controller {
             $this->response(array('error','Algo ha fallado en el servidor'),400);
         }
     }
-    
+
     public function index_delete($id){
        if ($id){
            $this->response(null,400);

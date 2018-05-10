@@ -18,7 +18,7 @@ class Search extends REST_Controller {
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($comunidad)){
-          $this->response(array('response' => $comunidad),200);
+          $this->response($comunidad,200);
       }else{
           $this->response(array('error'=> 'No hay datos en la base de datos...'), 400);
       }
@@ -32,7 +32,7 @@ class Search extends REST_Controller {
       $comunidad = $this->Busquedafiesta_Model->busqueda($id);
 
       if (!is_null($comunidad)){
-          $this->response(array('response' =>$comunidad),200);
+          $this->response($comunidad,200);
 
       }else{
           $this->response(array('error'=>'dato no encontrado...'),400);

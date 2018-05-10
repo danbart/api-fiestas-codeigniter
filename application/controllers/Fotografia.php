@@ -18,7 +18,7 @@ class Fotografia extends REST_Controller {
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($fotografia)){
-          $this->response(array('response' => $fotografia),200);
+          $this->response($fotografia,200);
       }else{
           $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
       }
@@ -32,7 +32,7 @@ class Fotografia extends REST_Controller {
       $fotografia = $this->Fotografia_Model->get($id);
 
       if (!is_null($fotografia)){
-          $this->response(array('response' =>$fotografia),200);
+          $this->response($fotografi,200);
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
