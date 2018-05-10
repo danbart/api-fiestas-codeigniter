@@ -83,6 +83,14 @@ $route['comunidadfiesta/(:num)']['get'] = 'comunidadfiesta/find/$1';
 //Fiestas del departamento
 $route['departamentofiestas']['get'] = 'departamentofiestas/index';
 $route['departamentofiestas/(:num)']['get'] = 'departamentofiestas/find/$1';
+
+//Fiestas Dia de Hoy
+$route['fiestashoy']['get'] = 'fiestashoy/index';
+$route['fiestashoy/(:any)']['get'] = 'fiestashoy/find/$1';
+
+//Fiestas Dia de Hoy
+$route['fiestasmes']['get'] = 'fiestasmes/index';
+$route['fiestasmes/(:any)']['get'] = 'fiestasmes/find/$1';
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes
