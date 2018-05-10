@@ -48,9 +48,23 @@ class Comunidades_Model extends CI_model
         foreach($comunidad as $key => $value) {
           $temp = $value['idComunidades'];
           $temp = $temp +0;
+            array_push($array, $value);
               $fiestas = $this->getFiesta($temp);
+              //buscamos las fotos por fiesta
+              foreach ($fiestas as $key => $value) {
+                $temp = $value['idFiestas'];
+                $temp = $temp+0;
+                $fotofiesta = $this->getFotografiaFiesta($temp);
+                array_push($array, $value, $fotofiesta);
+              }
+              //buscamos las fotos por fiesta de Semana Santa
               $semanasanta = $this->getSemanaSanta($temp);
-              array_push($array, $value, $fiestas, $semanasanta);
+              foreach ($semanasanta as $key => $value) {
+                $temp = $value['idSemanaSanta'];
+                $temp = $temp+0;
+                $fotofiesta = $this->getFotografiaSemanaSanta($temp);
+                array_push($array, $value, $fotofiesta);
+              }
 
         }
         return $array;
@@ -61,29 +75,44 @@ class Comunidades_Model extends CI_model
           $array = array();
           //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
             $departamentos = $this->getDepartamento($id);
-            var_dump($departamentos);
-            foreach($departamentos as $key => $value) {
-              $temp1 = $value['idDepartamentos'];
-              $temp1 = $temp1+0;
-              var_dump($temp1);
+            //agregamos el departamento al arreglo
+              array_push($array, $departamentos);
+              $temp = $departamentos['idDepartamentos'];
+              $temp = $temp+0;
                   $comunidad =$this->getComunidad($temp);
-                  // $fiestas = $this->comunFiestas($id);
-                  array_push($array, $value, $comunidad);
-
-            }
-
-            // $array = array($comunidad, $fiestas);
-
+                  //buscamos la comunidad y sus fiestas
+                    foreach($comunidad as $key => $value) {
+                      if(!is_null($value)){
+                        $temporal = $value['idComunidades'];
+                        $temporal = $temporal +0;
+                        $fiestas = $this->comunFiestas($temporal);
+                       array_push($array,  $fiestas);
+                    }
+                  }
             return $array;
         }
 
-        $query = $this->db->query('select * from Departamentos dp inner join Comunidades cm on dp.idDepartamentos=cm.departamentos_idDepartamentos inner join Fiestas ft on cm.idComunidades=ft.Comunidades_idComunidades');
-
-        if($query->num_rows()>0){
-          return $query->result_array();
-
-        }
-        return false;
+        $array = array();
+        //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
+          $departamentos = $this->getDepartamento();
+          //agregamos el departamento al arreglo
+            foreach($departamentos as $llave => $valor) {
+              array_push($array, $valor);
+              $temp = $valor['idDepartamentos'];
+              $temp = $temp+0;
+              $comunidad =$this->getComunidad($temp);
+              //buscamos la comunidad y sus fiestas
+                if($comunidad){
+                  foreach($comunidad as $key => $value) {
+                    $temp = $value['idComunidades'];
+                    $temp = $temp +0;  var_dump($temp);
+                    $fiestas = $this->comunFiestas($temp);
+                    array_push($array,  $fiestas);
+                  }
+                  $comunidad = null;
+                }
+            }
+          return $array;
     }
 
     public function getFiesta($id = null){
@@ -151,7 +180,7 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Comunidades')->where('departamentos_idDepartamentos',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_array();
             }elseif ($query->num_rows()> 1) {
               return $query->result_array();
             }
@@ -168,7 +197,8 @@ class Comunidades_Model extends CI_model
 
     public function getFotografiaFiesta($id = null){
         if (!is_null($id)){
-            $query = $this->db->select('*')->from('Fotografia')->where('_idFiestas',$id)->get();
+            // $query = $this->db->select('*')->from('Fotografia')->where('fiesta_idFiestas',$id)->get();
+            $query = $this->db->query('SELECT * FROM fotografia where fiesta_idFiestas='.$id);
 
             if ($query->num_rows()=== 1){
                 return $query->row_array();
