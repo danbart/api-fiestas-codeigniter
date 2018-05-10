@@ -37,35 +37,78 @@ class Comunidades_Model extends CI_model
             $fiestas = $this->getFiesta($id);
             $comunidad =$this->get($id);
             $semanasanta = $this->getSemanaSanta($id);
+            $array = array($comunidad);
+          if($fiestas!=false){
+            foreach($fiestas as $key1 => $value1) {
+              $temp1 = $value1['idFiestas'];
+              $temp1 = $temp1+0;
+              $fotofiesta = $this->getFotografiaFiesta($temp1);
+              if($fotofiesta!=false){
+                $fotoFies = array($value1, $fotofiesta);
+                array_push($array, $fotoFies);
+              }else{
+                  array_push($array, $value1);
+              }
+            }
+          }
 
-            $array = array($comunidad, $fiestas, $semanasanta);
+          if($semanasanta!=false){
+            foreach($semanasanta as $key2 => $value2) {
+              $temp2 = $value2['idSemanaSanta'];
+              $temp2 = $temp2+0;
+              $fotofiesta = $this->getFotografiaSemanaSanta($temp2);
+              if($fotofiesta != false){
+                $fotoFies = array($value2, $fotofiesta);
+                array_push($array, $fotoFies);
+              }else{
+                array_push($array, $value2);
 
+              }
+            }
+          }
             return $array;
         }
+
         $array = array();
         $comunidad =$this->get();
         //RECORREMOS EL ARREGLO DE COMUNIDADES Y LE AGREGAMOS LAS FIESTAS CORRESPONDIENTES
         foreach($comunidad as $key => $value) {
           $temp = $value['idComunidades'];
           $temp = $temp +0;
-            array_push($array, $value);
+          $comunidad = array($value);
+            // array_push($array, $value);
               $fiestas = $this->getFiesta($temp);
-              //buscamos las fotos por fiesta
-              foreach ($fiestas as $key => $value) {
-                $temp = $value['idFiestas'];
-                $temp = $temp+0;
-                $fotofiesta = $this->getFotografiaFiesta($temp);
-                array_push($array, $value, $fotofiesta);
-              }
-              //buscamos las fotos por fiesta de Semana Santa
               $semanasanta = $this->getSemanaSanta($temp);
-              foreach ($semanasanta as $key => $value) {
-                $temp = $value['idSemanaSanta'];
-                $temp = $temp+0;
-                $fotofiesta = $this->getFotografiaSemanaSanta($temp);
-                array_push($array, $value, $fotofiesta);
+              //buscamos las fotos por fiesta
+              if($fiestas!=false){
+              foreach($fiestas as $key1 => $value1) {
+                $temp1 = $value1['idFiestas'];
+                $temp1 = $temp1+0;
+                $fotofiesta = $this->getFotografiaFiesta($temp1);
+                if($fotofiesta != false){
+                $fotoFies = array($value1, $fotofiesta);
+                array_push($comunidad, $fotoFies);
+              }else{
+                array_push($comunidad, $value1);
               }
+              }
+            }
+              //buscamos las fotos por fiesta de Semana Santa
+              if($semanasanta!=false){
+                foreach($semanasanta as $key2 => $value2) {
+                  $temp2 = $value2['idSemanaSanta'];
+                  $temp2 = $temp2+0;
+                  $fotofiesta = $this->getFotografiaSemanaSanta($temp2);
+                  if($fotofiesta != false){
+                  $fotoFies = array($value2, $fotofiesta);
+                  array_push($comunidad, $fotoFies);
+                }else{
+                  array_push($comunidad, $value2);
+                }
+                }
 
+              }
+              array_push($array, $comunidad);
         }
         return $array;
     }
@@ -82,7 +125,7 @@ class Comunidades_Model extends CI_model
                   $comunidad =$this->getComunidad($temp);
                   //buscamos la comunidad y sus fiestas
                     foreach($comunidad as $key => $value) {
-                      if(!is_null($value)){
+                      if($value!=false){
                         $temporal = $value['idComunidades'];
                         $temporal = $temporal +0;
                         $fiestas = $this->comunFiestas($temporal);
@@ -102,7 +145,7 @@ class Comunidades_Model extends CI_model
               $temp = $temp+0;
               $comunidad =$this->getComunidad($temp);
               //buscamos la comunidad y sus fiestas
-                if($comunidad){
+                if($comunidad!=false){
                   foreach($comunidad as $key => $value) {
                     $temp = $value['idComunidades'];
                     $temp = $temp +0;  var_dump($temp);
@@ -120,7 +163,7 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Fiestas')->where('Comunidades_idComunidades',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_array();
             }elseif ($query->num_rows()> 1) {
               return $query->result_array();
             }
@@ -140,7 +183,7 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('SemanaSanta')->where('_idComunidades',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_array();
             }elseif ($query->num_rows()> 1) {
               return $query->result_array();
             }
@@ -197,9 +240,8 @@ class Comunidades_Model extends CI_model
 
     public function getFotografiaFiesta($id = null){
         if (!is_null($id)){
-            // $query = $this->db->select('*')->from('Fotografia')->where('fiesta_idFiestas',$id)->get();
-            $query = $this->db->query('SELECT * FROM fotografia where fiesta_idFiestas='.$id);
-
+            $query = $this->db->select('*')->from('Fotografia')->where('_idFiestas',$id)->get();
+            // $query = $this->db->query('SELECT * FROM fotografia where fiesta_idFiestas='.$id);
             if ($query->num_rows()=== 1){
                 return $query->row_array();
             }elseif ($query->num_rows()> 1) {
