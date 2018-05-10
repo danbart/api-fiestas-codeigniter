@@ -91,6 +91,9 @@ $route['fiestashoy/(:any)']['get'] = 'fiestashoy/find/$1';
 //Fiestas Dia de Hoy
 $route['fiestasmes']['get'] = 'fiestasmes/index';
 $route['fiestasmes/(:any)']['get'] = 'fiestasmes/find/$1';
+
+//Busqueda de Municipio o Departamento
+$route['search/(:any)']['get'] = 'search/find/$1';
 /*
 | -------------------------------------------------------------------------
 | Sample REST API Routes
