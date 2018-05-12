@@ -7,6 +7,8 @@ class Fiestas extends REST_Controller {
 
     public function __construct()
     {
+      header('Access-Control-Allow-Origin: *');
+      header('Access-Control-Allow-Methods: *');
         parent::__construct();
         $this->load->model('fiestas_model');
     }
@@ -14,12 +16,18 @@ class Fiestas extends REST_Controller {
     //obtener los datos de la tabla Fiestas
     public function index_get()
     {
+      header('Content-Type: application/json; charset=UTF-8');
+      header('Access-Control-Allow-Origin: *');
+
         //se llama al modelo fiestas
         $fiestas = $this->fiestas_model->get();
 
         // se valida si el resultado no es null de la respuesta
         if (!is_null($fiestas)){
-            $this->response($fiestas,200);
+          header('Content-Type: application/json; charset=UTF-8');
+          header('Access-Control-Allow-Origin: *');
+
+            echo json_encode($fiestas, JSON_PRETTY_PRINT);
         }else{
             $this->response(array('error'=> 'No hay fiestas en la base de datos...'), 400);
         }
@@ -31,12 +39,18 @@ class Fiestas extends REST_Controller {
     public function find_get($id)
     {
         if (!$id){
+          header('Content-Type: application/json; charset=UTF-8');
+          header('Access-Control-Allow-Origin: *');
+
             $this->response(null,400);
         }
         $fiestas = $this->fiestas_model->get($id);
 
         if (!is_null($fiestas)){
-            $this->response($fiestas,200);
+          header('Content-Type: application/json; charset=UTF-8');
+          header('Access-Control-Allow-Origin: *');
+
+echo json_encode($fiestas, JSON_PRETTY_PRINT);
 
         }else{
             $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
