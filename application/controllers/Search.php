@@ -44,7 +44,7 @@ echo json_encode($comunidad, JSON_PRETTY_PRINT);
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
 
-echo json_encode($`comunidad`, JSON_PRETTY_PRINT);
+echo json_encode($comunidad, JSON_PRETTY_PRINT);
 
       }else{
           $this->response(array('error'=>'dato no encontrado...'),400);
