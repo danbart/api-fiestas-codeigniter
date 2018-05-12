@@ -25,8 +25,8 @@ class DepartamentoFiestas extends REST_Controller {
       if (!is_null($comunidad)){
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
+$this->response( array('departamento'=>$comunidad), 200);
 
-          echo json_encode($comunidad, JSON_PRETTY_PRINT);
       }else{
           $this->response(array('error'=> 'No hay datos en la base de datos...'), 400);
       }
@@ -46,7 +46,7 @@ class DepartamentoFiestas extends REST_Controller {
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
 
-echo json_encode($comunidad, JSON_PRETTY_PRINT);
+$this->response( array('departamento'=>$comunidad), 200);
 
       }else{
           $this->response(array('error'=>'dato no encontrado...'),400);

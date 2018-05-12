@@ -25,7 +25,7 @@ class Comunidades extends REST_Controller {
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
 
-				echo json_encode($comunidad, JSON_PRETTY_PRINT);
+$this->response( array('comunidad'=>$comunidad), 200);
       }else{
           $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
       }
@@ -44,8 +44,8 @@ class Comunidades extends REST_Controller {
       if (!is_null($comunidad)){
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
-        
-    				echo json_encode($comunidad, JSON_PRETTY_PRINT);
+
+$this->response( array('comunidad'=>$comunidad), 200);
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);

@@ -44,8 +44,7 @@ echo json_encode($comunidad, JSON_PRETTY_PRINT);
       if (!is_null($comunidad)){
         header('Content-Type: application/json; charset=UTF-8');
         header('Access-Control-Allow-Origin: *');
-
-echo json_encode($comunidad, JSON_PRETTY_PRINT);
+$this->response( array('hoy'=>$comunidad), 200);
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);
