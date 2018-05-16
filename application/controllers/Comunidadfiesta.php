@@ -7,8 +7,6 @@ class ComunidadFiesta extends REST_Controller {
 
     public function __construct()
     {
-      header('Access-Control-Allow-Origin: *');
-      header('Access-Control-Allow-Methods: *');
         parent::__construct();
         $this->load->model('Comunidades_Model');
       //  $fiesta=$this->load->model('fiestas_model');
@@ -16,15 +14,12 @@ class ComunidadFiesta extends REST_Controller {
 
     public function index_get()
     {
-      header('Content-Type: application/json; charset=UTF-8');
-      header('Access-Control-Allow-Origin: *');
-
       //se llama al modelo Comunidades
       $comunidad = $this->Comunidades_Model->comunFiestas();
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($comunidad)){
-          echo json_encode($comunidad, JSON_PRETTY_PRINT);
+          $this->response($comunidad,200);
       }else{
           $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
       }
@@ -33,19 +28,12 @@ class ComunidadFiesta extends REST_Controller {
     public function find_get($id)
     {
       if (!$id){
-        header('Content-Type: application/json; charset=UTF-8');
-        header('Access-Control-Allow-Origin: *');
-
           $this->response(null,400);
       }
       $comunidad = $this->Comunidades_Model->comunFiestas($id);
 
       if (!is_null($comunidad)){
-
-        header('Content-Type: application/json; charset=UTF-8');
-        header('Access-Control-Allow-Origin: *');
-        
-echo json_encode($comunidad, JSON_PRETTY_PRINT);
+          $this->response($comunidad,200);
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);

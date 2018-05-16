@@ -15,10 +15,10 @@ class Comunidades_Model extends CI_model
 
     public function get($id = null){
         if (!is_null($id)){
-            $query = $this->db->select('*')->from('Comunidades')->where('Departamentos_idDepartamentos',$id)->get();
+            $query = $this->db->select('*')->from('Comunidades')->where('idComunidades',$id)->get();
 
-            if ($query->num_rows() > 0){
-          return $query->result_array();
+            if ($query->num_rows()=== 1){
+                return $query->row_array();
             }
             return false;
         }
@@ -114,25 +114,48 @@ class Comunidades_Model extends CI_model
     }
 
     public function deparFiestas($id = null){
-        if(!is_null($id)){
-          $query = $this->db->query("SELECT * from fiestas INNER JOIN comunidades on fiestas.Comunidades_idComunidades = comunidades.idComunidades INNER JOIN departamentos on departamentos.idDepartamentos = comunidades.Departamentos_idDepartamentos WHERE departamentos.idDepartamentos = '$id' ");
-
-          if ($query->num_rows() >= 0){
-              return $query->result_array();
-          }
-          else{
-            return null;
-          }
+        if (!is_null($id)){
+          $array = array();
+          //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
+            $departamentos = $this->getDepartamento($id);
+            //agregamos el departamento al arreglo
+              array_push($array, $departamentos);
+              $temp = $departamentos['idDepartamentos'];
+              $temp = $temp+0;
+                  $comunidad =$this->getComunidad($temp);
+                  //buscamos la comunidad y sus fiestas
+                    foreach($comunidad as $key => $value) {
+                      if($value!=false){
+                        $temporal = $value['idComunidades'];
+                        $temporal = $temporal +0;
+                        $fiestas = $this->comunFiestas($temporal);
+                       array_push($array,  $fiestas);
+                    }
+                  }
+            return $array;
         }
 
-        $query = $this->db->query("select * from Departamentos");
-
-        if ($query->num_rows() >= 0){
-            return $query->result_array();
-        }
-        else{
-          return null;
-        }
+        $array = array();
+        //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
+          $departamentos = $this->getDepartamento();
+          //agregamos el departamento al arreglo
+            foreach($departamentos as $llave => $valor) {
+              array_push($array, $valor);
+              $temp = $valor['idDepartamentos'];
+              $temp = $temp+0;
+              $comunidad =$this->getComunidad($temp);
+              //buscamos la comunidad y sus fiestas
+                if($comunidad!=false){
+                  foreach($comunidad as $key => $value) {
+                    $temp = $value['idComunidades'];
+                    $temp = $temp +0;
+                    $fiestas = $this->comunFiestas($temp);
+                    array_push($array,  $fiestas);
+                  }
+                  $comunidad = null;
+                }
+            }
+          return $array;
     }
 
     public function getFiesta($id = null){
@@ -276,21 +299,41 @@ class Comunidades_Model extends CI_model
     }
 
     public function getFiestasHoy($date = null){
+      date_default_timezone_set('America/Guatemala');
+      $today = new \DateTime("now");
+      $fiestas = array();
 
           if (!is_null($date)){
             $date = date('Y-m-d',strtotime($date));
-              $query = $this->db->query("select * from fiestas inner join comunidades on fiestas.Comunidades_idComunidades = comunidades.idComunidades where fiestas.Fecha_Inico =  '$date'");
+              $query = $this->db->query("select * from Fiestas where (dayofmonth(Fecha_Inico) = dayofmonth('$date') and month(Fecha_Inico) = month('$date')) or (dayofmonth(Fecha_Fin) = dayofmonth('$date') and month(Fecha_Fin) = month('$date'))");
               $datos = $query->result_array();
               if($query->num_rows()>0){
-                  		return $query->result_array();
+                foreach($datos as $key1 => $value1) {
+                  $temp1 = $value1['Comunidades_idComunidades'];
+                  $temp1 = $temp1+0;
+                  $fiesta = $this->comunFiestas($temp1);
+                  array_push($fiestas, $fiesta);
                 }
-              else{
-              return false;
+                return $fiestas;
               }
-
+              return false;
+          }
+          $date= $today->format('Y-m-d');
+          $query = $this->db->query("select * from Fiestas where (dayofmonth(Fecha_Inico) = dayofmonth('$date') and month(Fecha_Inico) = month('$date'))  or (dayofmonth(Fecha_Fin) = dayofmonth('$date') and month(Fecha_Fin) = month('$date'))");
+          $datos = $query->result_array();
+          if($query->num_rows()>0){
+            foreach($datos as $key1 => $value1) {
+              $temp1 = $value1['Comunidades_idComunidades'];
+              $temp1 = $temp1+0;
+              $fiesta = $this->comunFiestas($temp1);
+              array_push($fiestas, $fiesta);
+            }
+            return $fiestas;
+          }
+          return false;
 
     }
-}
+
     public function getFiestasMes($date = null){
       date_default_timezone_set('America/Guatemala');
       $today = new \DateTime("now");
