@@ -18,14 +18,14 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Comunidades')->where('idComunidades',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Comunidades')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -34,18 +34,23 @@ class Comunidades_Model extends CI_model
     public function comunFiestas($id = null){
         if (!is_null($id)){
           //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
-            $fiestas = $this->getFiesta($id);
-            $comunidad =$this->get($id);
-            $semanasanta = $this->getSemanaSanta($id);
+            $fiestas = json_decode(json_encode($this->getFiesta($id)), true);
+            $comunidad = json_decode(json_encode($this->get($id)), true);
+            $semanasanta = json_decode(json_encode($this->getSemanaSanta($id)), true);
             $array = array($comunidad);
           if($fiestas!=false){
             foreach($fiestas as $key1 => $value1) {
               $temp1 = $value1['idFiestas'];
               $temp1 = $temp1+0;
-              $fotofiesta = $this->getFotografiaFiesta($temp1);
+              $fotofiesta = json_decode(json_encode($this->getFotografiaFiesta($temp1)), true);
               if($fotofiesta!=false){
+                // foreach ($variable as $key => $value) {
+                //   array_push();
+                // }
                 $fotoFies = array($value1, $fotofiesta);
-                array_push($array, $fotoFies);
+                foreach ($fotoFies as $key => $value4) {
+                  array_push($array, $value4);
+                }
               }else{
                   array_push($array, $value1);
               }
@@ -56,13 +61,14 @@ class Comunidades_Model extends CI_model
             foreach($semanasanta as $key2 => $value2) {
               $temp2 = $value2['idSemanaSanta'];
               $temp2 = $temp2+0;
-              $fotofiesta = $this->getFotografiaSemanaSanta($temp2);
+              $fotofiesta = json_decode(json_encode($this->getFotografiaSemanaSanta($temp2)), true);
               if($fotofiesta != false){
                 $fotoFies = array($value2, $fotofiesta);
-                array_push($array, $fotoFies);
+                foreach ($fotoFies as $key => $value4) {
+                  array_push($array, $value4);
+                }
               }else{
                 array_push($array, $value2);
-
               }
             }
           }
@@ -70,21 +76,21 @@ class Comunidades_Model extends CI_model
         }
 
         $array = array();
-        $comunidad =$this->get();
+        $comunidad =json_decode(json_encode($this->get()), true);
         //RECORREMOS EL ARREGLO DE COMUNIDADES Y LE AGREGAMOS LAS FIESTAS CORRESPONDIENTES
         foreach($comunidad as $key => $value) {
           $temp = $value['idComunidades'];
           $temp = $temp +0;
           $comunidad = array($value);
             // array_push($array, $value);
-              $fiestas = $this->getFiesta($temp);
-              $semanasanta = $this->getSemanaSanta($temp);
+              $fiestas = json_decode(json_encode($this->getFiesta($temp)), true);
+              $semanasanta = json_decode(json_encode($this->getSemanaSanta($temp)), true);
               //buscamos las fotos por fiesta
               if($fiestas!=false){
               foreach($fiestas as $key1 => $value1) {
                 $temp1 = $value1['idFiestas'];
                 $temp1 = $temp1+0;
-                $fotofiesta = $this->getFotografiaFiesta($temp1);
+                $fotofiesta = json_decode(json_encode($this->getFotografiaFiesta($temp1)), true);
                 if($fotofiesta != false){
                 $fotoFies = array($value1, $fotofiesta);
                 array_push($comunidad, $fotoFies);
@@ -98,15 +104,14 @@ class Comunidades_Model extends CI_model
                 foreach($semanasanta as $key2 => $value2) {
                   $temp2 = $value2['idSemanaSanta'];
                   $temp2 = $temp2+0;
-                  $fotofiesta = $this->getFotografiaSemanaSanta($temp2);
+                  $fotofiesta = json_decode(json_encode($this->getFotografiaSemanaSanta($temp2)), true);
                   if($fotofiesta != false){
                   $fotoFies = array($value2, $fotofiesta);
                   array_push($comunidad, $fotoFies);
                 }else{
                   array_push($comunidad, $value2);
                 }
-                }
-
+               }
               }
               array_push($array, $comunidad);
         }
@@ -117,18 +122,18 @@ class Comunidades_Model extends CI_model
         if (!is_null($id)){
           $array = array();
           //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
-            $departamentos = $this->getDepartamento($id);
+            $departamentos = json_decode(json_encode($this->getDepartamento($id)), true);
             //agregamos el departamento al arreglo
               array_push($array, $departamentos);
               $temp = $departamentos['idDepartamentos'];
               $temp = $temp+0;
-                  $comunidad =$this->getComunidad($temp);
+                  $comunidad =json_decode(json_encode($this->getComunidad($temp)), true);
                   //buscamos la comunidad y sus fiestas
                     foreach($comunidad as $key => $value) {
                       if($value!=false){
                         $temporal = $value['idComunidades'];
                         $temporal = $temporal +0;
-                        $fiestas = $this->comunFiestas($temporal);
+                        $fiestas = json_decode(json_encode($this->comunFiestas($temporal)), true);
                        array_push($array,  $fiestas);
                     }
                   }
@@ -137,19 +142,19 @@ class Comunidades_Model extends CI_model
 
         $array = array();
         //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
-          $departamentos = $this->getDepartamento();
+          $departamentos = json_decode(json_encode($this->getDepartamento()), true);
           //agregamos el departamento al arreglo
             foreach($departamentos as $llave => $valor) {
               array_push($array, $valor);
               $temp = $valor['idDepartamentos'];
               $temp = $temp+0;
-              $comunidad =$this->getComunidad($temp);
+              $comunidad = json_decode(json_encode($this->getComunidad($temp)), true);
               //buscamos la comunidad y sus fiestas
                 if($comunidad!=false){
                   foreach($comunidad as $key => $value) {
                     $temp = $value['idComunidades'];
                     $temp = $temp +0;
-                    $fiestas = $this->comunFiestas($temp);
+                    $fiestas = json_decode(json_encode($this->comunFiestas($temp)), true);
                     array_push($array,  $fiestas);
                   }
                   $comunidad = null;
@@ -163,16 +168,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Fiestas')->where('Comunidades_idComunidades',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->result_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Fiestas')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -183,16 +188,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('SemanaSanta')->where('_idComunidades',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->result_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('SemanaSanta')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -203,16 +208,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Departamentos')->where('idDepartamentos',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Departamentos')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -223,16 +228,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Comunidades')->where('departamentos_idDepartamentos',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->result_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Comunidades')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -243,16 +248,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Fotografia')->where('_idFiestas',$id)->get();
             // $query = $this->db->query('SELECT * FROM fotografia where fiesta_idFiestas='.$id);
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -263,16 +268,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Fotografia')->where('_idSemanaSanta',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -283,16 +288,16 @@ class Comunidades_Model extends CI_model
             $query = $this->db->select('*')->from('Fotografia')->where('Fiestas_Nacionales_idFinac',$id)->get();
 
             if ($query->num_rows()=== 1){
-                return $query->row_array();
+                return $query->result_object();
             }elseif ($query->num_rows()> 1) {
-              return $query->result_array();
+              return $query->result_object();
             }
             return false;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
         if($query->num_rows()>0){
-          return $query->result_array();
+          return $query->result_object();
 
         }
         return false;
@@ -311,7 +316,7 @@ class Comunidades_Model extends CI_model
                 foreach($datos as $key1 => $value1) {
                   $temp1 = $value1['Comunidades_idComunidades'];
                   $temp1 = $temp1+0;
-                  $fiesta = $this->comunFiestas($temp1);
+                  $fiesta = json_decode(json_encode($this->comunFiestas($temp1)), true);
                   array_push($fiestas, $fiesta);
                 }
                 return $fiestas;
@@ -325,7 +330,7 @@ class Comunidades_Model extends CI_model
             foreach($datos as $key1 => $value1) {
               $temp1 = $value1['Comunidades_idComunidades'];
               $temp1 = $temp1+0;
-              $fiesta = $this->comunFiestas($temp1);
+              $fiesta = json_decode(json_encode($this->comunFiestas($temp1)), true);
               array_push($fiestas, $fiesta);
             }
             return $fiestas;
@@ -347,10 +352,10 @@ class Comunidades_Model extends CI_model
                 foreach($datos as $key1 => $value1) {
                   $temp1 = $value1['Comunidades_idComunidades'];
                   $temp1 = $temp1+0;
-                  $fiesta = $this->comunFiestas($temp1);
+                  $fiesta = json_decode(json_encode($this->comunFiestas($temp1)), true);
                   array_push($fiestas, $fiesta);
                 }
-                return $fiestas;
+                echo json_encode($fiestas);
               }
               return false;
           }
@@ -361,10 +366,10 @@ class Comunidades_Model extends CI_model
             foreach($datos as $key1 => $value1) {
               $temp1 = $value1['Comunidades_idComunidades'];
               $temp1 = $temp1+0;
-              $fiesta = $this->comunFiestas($temp1);
+              $fiesta = json_decode(json_encode($this->comunFiestas($temp1)), true);
               array_push($fiestas, $fiesta);
             }
-            return $fiestas;
+            echo json_encode($fiestas);
           }
           return false;
 
