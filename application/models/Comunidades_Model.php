@@ -182,10 +182,30 @@ class Comunidades_Model extends CI_model
         }
         return false;
     }
-
+    //obtenemos la semana santa desde id comunidad a la cual pertenece
     public function getSemanaSanta($id = null){
         if (!is_null($id)){
             $query = $this->db->select('*')->from('SemanaSanta')->where('_idComunidades',$id)->get();
+
+            if ($query->num_rows()=== 1){
+                return $query->result_object();
+            }elseif ($query->num_rows()> 1) {
+              return $query->result_object();
+            }
+            return false;
+        }
+
+        $query = $this->db->select('*')->from('SemanaSanta')->get();
+        if($query->num_rows()>0){
+          return $query->result_object();
+
+        }
+        return false;
+    }
+    //obtenemos semana santa desde id
+    public function getSemanaSantaId($id = null){
+        if (!is_null($id)){
+            $query = $this->db->select('*')->from('SemanaSanta')->where('idSemanaSanta',$id)->get();
 
             if ($query->num_rows()=== 1){
                 return $query->result_object();

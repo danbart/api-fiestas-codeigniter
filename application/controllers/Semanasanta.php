@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . '/libraries/REST_Controller.php';
 
 
-class Comunidades extends REST_Controller {
+class SemanaSanta extends REST_Controller {
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class Comunidades extends REST_Controller {
     public function index_get()
     {
       //se llama al modelo Comunidades
-      $comunidad = $this->Comunidades_Model->get();
+      $comunidad = $this->Comunidades_Model->getSemanaSantaId();
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($comunidad)){
@@ -29,7 +29,7 @@ class Comunidades extends REST_Controller {
       if (!$id){
           $this->response(null,400);
       }
-      $comunidad = $this->Comunidades_Model->get($id);
+      $comunidad = $this->Comunidades_Model->getSemanaSantaId($id);
 
       if (!is_null($comunidad)){
           $this->response($comunidad,200);

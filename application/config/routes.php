@@ -76,6 +76,34 @@ $route['comunidades']['post'] = 'comunidades/index';
 $route['comunidades/(:num)']['put'] = 'comunidades/index/$1';
 $route['comunidades/(:num)']['delete'] = 'comunidades/index/$1';
 
+//rutas para Departamentos
+$route['departamentos']['get'] = 'departamentos/index';
+$route['departamentos/(:num)']['get'] = 'departamentos/find/$1';
+$route['departamentos']['post'] = 'departamentos/index';
+$route['departamentos/(:num)']['put'] = 'departamentos/index/$1';
+$route['departamentos/(:num)']['delete'] = 'departamentos/index/$1';
+
+//rutas para Semana Santa
+$route['semanasanta']['get'] = 'semanasanta/index';
+$route['semanasanta/(:num)']['get'] = 'semanasanta/find/$1';
+$route['semanasanta']['post'] = 'semanasanta/index';
+$route['semanasanta/(:num)']['put'] = 'semanasanta/index/$1';
+$route['semanasanta/(:num)']['delete'] = 'semanasanta/index/$1';
+
+//rutas para Semana Santa que pertenecen a una comunidad
+$route['comunidadsemanasanta']['get'] = 'comunidadsemanasanta/index';
+$route['comunidadsemanasanta/(:num)']['get'] = 'comunidadsemanasanta/find/$1';
+$route['comunidadsemanasanta']['post'] = 'comunidadsemanasanta/index';
+$route['comunidadsemanasanta/(:num)']['put'] = 'comunidadsemanasanta/index/$1';
+$route['comunidadsemanasanta/(:num)']['delete'] = 'comunidadsemanasanta/index/$1';
+
+//rutas para una fiesta que pertenecen a una comunidad
+$route['fiestacomunidad']['get'] = 'fiestacomunidad/index';
+$route['fiestacomunidad/(:num)']['get'] = 'fiestacomunidad/find/$1';
+$route['fiestacomunidad']['post'] = 'fiestacomunidad/index';
+$route['fiestacomunidad/(:num)']['put'] = 'fiestacomunidad/index/$1';
+$route['fiestacomunidad/(:num)']['delete'] = 'fiestacomunidad/index/$1';
+
 //fiestas del municipio
 $route['comunidadfiesta']['get'] = 'comunidadfiesta/index';
 $route['comunidadfiesta/(:num)']['get'] = 'comunidadfiesta/find/$1';
