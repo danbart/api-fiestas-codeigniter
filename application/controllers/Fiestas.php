@@ -1,15 +1,14 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET, OPTIONS");
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH . '/libraries/REST_Controller.php';
 
 
 class Fiestas extends REST_Controller {
 
-    public function __construct()
+    public function __construct($config = 'rest')
     {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, OPTIONS");
         parent::__construct();
         $this->load->model('fiestas_model');
     }
