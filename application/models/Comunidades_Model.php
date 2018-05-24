@@ -377,7 +377,9 @@ and ft.idFiestas=fot._idFiestas");
               return false;
           }
           $date= $today->format('Y-m-d');
-          $query = $this->db->query("select * from Fiestas where (dayofmonth(Fecha_Inico) = dayofmonth('$date') and month(Fecha_Inico) = month('$date'))  or (dayofmonth(Fecha_Fin) = dayofmonth('$date') and month(Fecha_Fin) = month('$date'))");
+          // $query = $this->db->query("select * from Fiestas where (dayofmonth(Fecha_Inico) = dayofmonth('$date') and month(Fecha_Inico) = month('$date'))  or (dayofmonth(Fecha_Fin) = dayofmonth('$date') and month(Fecha_Fin) = month('$date'))");
+          $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Descripcion_Fiesta as Descripcion, ft.Fecha_Inico as Fiesta, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
+where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=ft.Comunidades_idComunidades and ft.idFiestas=fot._idFiestas and (dayofmonth(ft.Fecha_Inico) = dayofmonth('$date') and month(ft.Fecha_Inico) = month('$date'))  or (dayofmonth(ft.Fecha_Fin) = dayofmonth('$date') and month(ft.Fecha_Fin) = month('$date'))");
           if($query->num_rows()>0){
             return $query->result_object();
           }

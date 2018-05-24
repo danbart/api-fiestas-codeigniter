@@ -21,22 +21,12 @@ class Busquedafiesta_Model extends CI_model{
             array_push($array, $caracter);
           }
           $cadena = implode($array);
-            $depart = $this->db->query("select * from Departamentos where Nombre_Deptos like '%$cadena%'");
-            $municip = $this->db->query("select * from Comunidades where Nombre_Comunidad like '%$cadena%'");
-            $search = array();
-            if ($depart->num_rows() > 0){
-                $departamento = $depart->result_array();
-                array_push($search, $departamento);
-            }
-            if ($municip->num_rows() > 0){
-                $municipio = $municip->result_array();
-                array_push($search, $municipio);
-            }
+            $depart = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Descripcion_Fiesta as Descripcion, ft.Fecha_Inico as Fiesta, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
+where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=ft.Comunidades_idComunidades and ft.idFiestas=fot._idFiestas and (cm.Nombre_Comunidad like '%$cadena%' or  dp.Nombre_Deptos like '%$cadena%')");
+            if($depart->num_rows()>0){
+              return $depart->result_object();
 
-            if(!empty($search)){
-              return $search;
             }
-
             return false;
         }
         return false;
