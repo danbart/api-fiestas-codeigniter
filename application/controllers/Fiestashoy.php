@@ -20,7 +20,7 @@ class FiestasHoy extends REST_Controller {
 
       // se valida si el resultado no es null de la respuesta
       if (!is_null($comunidad)){
-          $this->response(array('response' => $comunidad),200);
+          $this->response($comunidad,200);
       }else{
           $this->response(array('error'=> 'No hay fotografias en la base de datos...'), 400);
       }
@@ -34,7 +34,7 @@ class FiestasHoy extends REST_Controller {
       $comunidad = $this->Comunidades_Model->getFiestasHoy($date);
 
       if (!is_null($comunidad)){
-          $this->response(array('response' =>$comunidad),200);
+          $this->response($comunidad,200);
 
       }else{
           $this->response(array('error'=>'Fiesta o despartamento no encontrado...'),400);

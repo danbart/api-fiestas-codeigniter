@@ -20,7 +20,7 @@ class Comunidades_Model extends CI_model
             if ($query->num_rows()=== 1){
                 return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Comunidades')->get();
@@ -28,7 +28,7 @@ class Comunidades_Model extends CI_model
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function comunFiestas($id = null){
@@ -41,7 +41,7 @@ where cm.idComunidades=ft.Comunidades_idComunidades and ft.idFiestas=fot._idFies
           }elseif ($query->num_rows()> 1) {
             return $query->result_object();
           }
-          return false;
+          return null;
       }
 
       $query = $this->db->query("select cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, fot.Nombre_Fotografia as img from Comunidades cm, Fiestas ft, Fotografia fot
@@ -50,7 +50,7 @@ where cm.idComunidades=ft.Comunidades_idComunidades and ft.idFiestas=fot._idFies
         return $query->result_object();
 
       }
-      return false;
+      return null;
         // if (!is_null($id)){
         //   //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
         //     $fiestas = json_decode(json_encode($this->getFiesta($id)), true);
@@ -148,7 +148,7 @@ and ft.idFiestas=fot._idFiestas and dp.idDepartamentos=$id");
           }elseif ($query->num_rows()> 1) {
             return $query->result_object();
           }
-          return false;
+          return null;
       }
 
       $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
@@ -158,7 +158,7 @@ and ft.idFiestas=fot._idFiestas");
         return $query->result_object();
 
       }
-      return false;
+      return null;
         // if (!is_null($id)){
         //   $array = array();
         //   //LLAMAMOS FUNCIONES DEFINIDAS DENTRO DE LA CLASE
@@ -212,7 +212,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Fiestas')->get();
@@ -220,7 +220,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
     //obtenemos la semana santa desde id comunidad a la cual pertenece
     public function getSemanaSanta($id = null){
@@ -232,7 +232,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('SemanaSanta')->get();
@@ -240,7 +240,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
     //obtenemos semana santa desde id
     public function getSemanaSantaId($id = null){
@@ -252,7 +252,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('SemanaSanta')->get();
@@ -260,7 +260,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getDepartamento($id = null){
@@ -272,7 +272,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Departamentos')->get();
@@ -280,7 +280,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getComunidad($id = null){
@@ -292,7 +292,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Comunidades')->get();
@@ -300,7 +300,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getFotografiaFiesta($id = null){
@@ -312,7 +312,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
@@ -320,7 +320,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getFotografiaSemanaSanta($id = null){
@@ -332,7 +332,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
@@ -340,7 +340,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getFotograFestaNacional($id = null){
@@ -352,7 +352,7 @@ and ft.idFiestas=fot._idFiestas");
             }elseif ($query->num_rows()> 1) {
               return $query->result_object();
             }
-            return false;
+            return null;
         }
 
         $query = $this->db->select('*')->from('Fotografia')->get();
@@ -360,7 +360,7 @@ and ft.idFiestas=fot._idFiestas");
           return $query->result_object();
 
         }
-        return false;
+        return null;
     }
 
     public function getFiestasHoy($date = null){
@@ -374,7 +374,7 @@ and ft.idFiestas=fot._idFiestas");
               if($query->num_rows()>0){
                 return $query->result_object();
               }
-              return false;
+              return null;
           }
           $date= $today->format('Y-m-d');
           // $query = $this->db->query("select * from Fiestas where (dayofmonth(Fecha_Inico) = dayofmonth('$date') and month(Fecha_Inico) = month('$date'))  or (dayofmonth(Fecha_Fin) = dayofmonth('$date') and month(Fecha_Fin) = month('$date'))");
@@ -383,7 +383,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
           if($query->num_rows()>0){
             return $query->result_object();
           }
-          return false;
+          return null;
 
     }
 
@@ -399,7 +399,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
               if($query->num_rows()>0){
                 return $query->result_object();
               }
-              return false;
+              return null;
           }
           $date= $today->format('Y-m-d');
           $query = $this->db->query("select dp.Nombre_Deptos as Departamento, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad,  fot.Nombre_Fotografia as img
@@ -407,7 +407,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
           if($query->num_rows()>0){
             return $query->result_object();
           }
-          return false;
+          return null;
 
     }
 
