@@ -15,7 +15,7 @@ class Fiestas_model extends CI_model{
             if ($query->num_rows()=== 1){
                 return $query->row_array();
             }
-            return null;
+            return false;
         }
 
         $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Descripcion_Fiesta as Descripcion, ft.Fecha_Inico as Fiesta, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
@@ -25,7 +25,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
           return $query->result_array();
 
         }
-        return null;
+        return false;
     }
 
 
@@ -35,7 +35,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
         if($this->db->affected_rows() ===1){
             return $this->db->insert_id();
         }
-        return null;
+        return false;
     }
 
     public function update($id,$fiesta){

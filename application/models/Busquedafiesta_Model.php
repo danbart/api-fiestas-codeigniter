@@ -27,9 +27,9 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
               return $depart->result_object();
 
             }
-            return null;
+            return false;
         }
-        return null;
+        return false;
         }
 
 }
