@@ -139,7 +139,7 @@ where cm.idComunidades=ft.Comunidades_idComunidades and ft.idFiestas=fot._idFies
 
     public function deparFiestas($id = null){
       if (!is_null($id)){
-          $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
+          $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
 where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=ft.Comunidades_idComunidades
 and ft.idFiestas=fot._idFiestas and dp.idDepartamentos=$id");
 
@@ -151,7 +151,7 @@ and ft.idFiestas=fot._idFiestas and dp.idDepartamentos=$id");
           return false;
       }
 
-      $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
+      $query = $this->db->query("select dp.Nombre_Deptos as Departamento, cm.Nombre_Comunidad as Comunidad, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, fot.Nombre_Fotografia as img from Departamentos dp, Comunidades cm, Fiestas ft, Fotografia fot
 where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=ft.Comunidades_idComunidades
 and ft.idFiestas=fot._idFiestas");
       if($query->num_rows()>0){
@@ -394,14 +394,16 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
 
           if (!is_null($date)){
             $date = date('Y-m-d',strtotime($date));
-              $query = $this->db->query("select ft.Fecha_Inico as Fiesta, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad, fot.Nombre_Fotografia as img from Fiestas ft inner join Comunidades cm on ft.comunidades_idComunidades=cm.idComunidades inner join Fotografia fot on fot._idFiestas=ft.idFiestas  where (month(ft.Fecha_Inico) = month('$date')) or (month(ft.Fecha_Fin) = month('$date'))");
+              $query = $this->db->query("select dp.Nombre_Deptos as Departamento, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad,  fot.Nombre_Fotografia as img
+              from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot, where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date')) or (month(ft.Fecha_Fin) = month('$date'))");
               if($query->num_rows()>0){
                 return $query->result_object();
               }
               return false;
           }
           $date= $today->format('Y-m-d');
-          $query = $this->db->query("select ft.Fecha_Inico as Fiesta, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad, fot.Nombre_Fotografia as img from Fiestas ft inner join Comunidades cm on ft.comunidades_idComunidades=cm.idComunidades inner join Fotografia fot on fot._idFiestas=ft.idFiestas where (month(ft.Fecha_Inico) = month('$date'))  or (month(ft.Fecha_Fin) = month('$date'))");
+          $query = $this->db->query("select dp.Nombre_Deptos as Departamento, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad,  fot.Nombre_Fotografia as img
+          from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot, where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date'))  or (month(ft.Fecha_Fin) = month('$date'))");
           if($query->num_rows()>0){
             return $query->result_object();
           }
