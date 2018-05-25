@@ -395,7 +395,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
           if (!is_null($date)){
             $date = date('Y-m-d',strtotime($date));
               $query = $this->db->query("select dp.Nombre_Deptos as Departamento, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad,  fot.Nombre_Fotografia as img
-              from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot, where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date')) or (month(ft.Fecha_Fin) = month('$date'))");
+              from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date')) or (month(ft.Fecha_Fin) = month('$date'))");
               if($query->num_rows()>0){
                 return $query->result_object();
               }
@@ -403,7 +403,7 @@ where dp.idDepartamentos=cm.Departamentos_idDepartamentos and cm.idComunidades=f
           }
           $date= $today->format('Y-m-d');
           $query = $this->db->query("select dp.Nombre_Deptos as Departamento, ft.Fecha_Inico as Fiesta, ft.Descripcion_Fiesta as Descripcion, ft.Nombre_Fiestas, cm.Nombre_Comunidad as Comunidad,  fot.Nombre_Fotografia as img
-          from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot, where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date'))  or (month(ft.Fecha_Fin) = month('$date'))");
+          from Departamentos dp,  Fiestas ft, Comunidades cm, Fotografia fot where dp.idDepartamentos=cm.Departamentos_idDepartamentos and ft.comunidades_idComunidades=cm.idComunidades and fot._idFiestas=ft.idFiestas and (month(ft.Fecha_Inico) = month('$date'))  or (month(ft.Fecha_Fin) = month('$date'))");
           if($query->num_rows()>0){
             return $query->result_object();
           }
